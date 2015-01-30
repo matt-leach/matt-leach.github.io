@@ -12,8 +12,60 @@ html {
 
 #page-wrap { width: 800px; margin: 50px auto; padding: 20px; background: rgba(255,255,255,0.5);; -moz-box-shadow: 0 0 20px black; -webkit-box-shadow: 0 0 20px black; box-shadow: 0 0 20px black; 
 			min-height: 1000px;}
-</style>
+			
+a {
+	text-decoration: none;
+}
 
+#icons {
+	margin-top: 6%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+}			
+
+.icon {
+	opacity: 0.75;
+	margin: 10 10 10 10;
+	width: 80px;
+}
+.icon:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+#notes {
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+	background: rgba(255,255,255,0.5);
+	-moz-box-shadow: 0 0 20px black; 
+	-webkit-box-shadow: 0 0 20px black; 
+	box-shadow: 0 0 20px black;
+	display: none;
+}
+
+</style>
+<div id="icons">
+	<a href="https://github.com/matt-leach">
+		<img src="{{ url_for('static', filename='GitHub-Mark-64px.png') }}" class="icon" />
+	</a>
+	<a href="https://github.com/matt-leach" onmouseover="document.getElementById('notes').style.display='block';" onMouseOut="document.getElementById('notes').style.display='none';">
+		<img src="{{ url_for('static', filename='flickr.png') }}" class="icon" />
+	</a>
+	<a href="https://www.linkedin.com/profile/view?id=281859096">
+		<img src="{{ url_for('static', filename='linkedin2.png') }}" class="icon" />
+	</a>
+	<a href="mailto:matt.leach25@gmail.com">
+		<img src="{{ url_for('static', filename='gmail.png') }}" class="icon" />
+	</a>
+</div>
+<div id="notes">
+	<p>Photo by Nick Leach</p>
+</div>
+
+<!--
 <div id="page-wrap">
 	<h2>Posts</h2>
 	
@@ -25,4 +77,5 @@ html {
 	  {% endfor %}
 	</ul>
 </div>
+-->
 {% endblock %}
