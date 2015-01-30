@@ -42,7 +42,7 @@ a {
 	-moz-box-shadow: 0 0 20px black; 
 	-webkit-box-shadow: 0 0 20px black; 
 	box-shadow: 0 0 20px black;
-	display: none;
+	// display: none;
 }
 
 </style>
@@ -50,7 +50,7 @@ a {
 	<a href="https://github.com/matt-leach">
 		<img src="/static/GitHub-Mark-64px.png" class="icon" />
 	</a>
-	<a href="https://github.com/matt-leach" onmouseover="document.getElementById('notes').style.display='block';" onMouseOut="document.getElementById('notes').style.display='none';">
+	<a href="https://github.com/matt-leach" onmouseover="document.getElementById('notes').innerHTML = 'Background Photo By Nick Leach';" onMouseOut="document.getElementById('notes').innerHTML = 'Matthew Leach';">
 		<img src="/static/flickr.png" class="icon" />
 	</a>
 	<a href="https://www.linkedin.com/profile/view?id=281859096">
@@ -61,7 +61,7 @@ a {
 	</a>
 </div>
 <div id="notes">
-	<p>Photo by Nick Leach</p>
+	<p>Matthew Leach</p>
 </div>
 
 <!--
