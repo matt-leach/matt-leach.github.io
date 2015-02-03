@@ -47,14 +47,26 @@ a {
 }
 
 </style>
+
+<script>
+	function updateText(text) {
+		document.getElementById('notes').style.display = 'block';
+		document.getElementById('notes').innerHTML = text;
+	}
+	
+	function hideText() {
+		document.getElementById('notes').style.display = "none";
+	}
+</script>
+
 <div id="icons">
 	<a href="https://github.com/matt-leach">
 		<img src="{{ url_for('static', filename='GitHub-Mark-64px.png') }}" class="icon" />
 	</a>
-	<a href="https://github.com/matt-leach" onmouseover="document.getElementById('notes').innerHTML = 'Background Photo By Nick Leach';" onMouseOut="document.getElementById('notes').innerHTML = 'Matthew Leach';">
+	<a href="https://github.com/matt-leach" onmouseover="updateText('Background Photo By Nick Leach');" onMouseOut="hideText();">
 		<img src="{{ url_for('static', filename='flickr.png') }}" class="icon" />
 	</a>
-	<a href="https://www.linkedin.com/profile/view?id=281859096">
+	<a href="https://www.linkedin.com/profile/view?id=281859096" onmouseover="updateText('Experience:<br>PatientSource<br>Metaswitch<br>GSK');" onMouseOut="hideText();">
 		<img src="{{ url_for('static', filename='linkedin2.png') }}" class="icon" />
 	</a>
 	<a href="mailto:matt.leach25@gmail.com">
