@@ -1,91 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Matt Leach</title>
+</head>
+
+<body>
 
 
 <style>
-html { 
-  background: url(/static/background.jpg) no-repeat center center fixed; 
+html {
+  background: url(/static/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-
-#page-wrap { width: 800px; margin: 50px auto; padding: 20px; background: rgba(255,255,255,0.5);; -moz-box-shadow: 0 0 20px black; -webkit-box-shadow: 0 0 20px black; box-shadow: 0 0 20px black; 
-			min-height: 1000px;}
-			
-a {
-	text-decoration: none;
-}
-
-#icons {
-	margin-top: 6%;
-	margin-left: auto;
-	margin-right: auto;
-	width: 30%;
-}			
-
-.icon {
-	opacity: 0.75;
-	margin: 10 10 10 10;
-	width: 80px;
-}
-.icon:hover {
-	opacity: 1;
-	cursor: pointer;
-}
-
-#notes {
-	width: 30%;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 20px;
-	background: rgba(255,255,255,0.5);
-	-moz-box-shadow: 0 0 20px black; 
-	-webkit-box-shadow: 0 0 20px black; 
-	box-shadow: 0 0 20px black;
-	// display: none;
-}
-
 </style>
 
-<script>
-	function updateText(text) {
-		document.getElementById('notes').style.display = 'block';
-		document.getElementById('notes').innerHTML = text;
-	}
-	
-	function hideText() {
-		document.getElementById('notes').style.display = "none";
-	}
-</script>
 
-<div id="icons">
-	<a href="https://github.com/matt-leach">
-		<img src="/static/GitHub-Mark-64px.png" class="icon" />
-	</a>
-	<a href="https://github.com/matt-leach" onmouseover="updateText('Background Photo By Nick Leach');" onMouseOut="hideText();">
-		<img src="/static/flickr.png" class="icon" />
-	</a>
-	<a href="https://www.linkedin.com/profile/view?id=281859096" onmouseover="updateText('Experience:<br>PatientSource<br>Metaswitch<br>GSK');" onMouseOut="hideText();">
-		<img src="/static/linkedin2.png" class="icon" />
-	</a>
-	<a href="mailto:matt.leach25@gmail.com">
-		<img src="/static/gmail.png" class="icon" />
-	</a>
-</div>
-<div id="notes">
-	<p>Matthew Leach</p>
-</div>
 
-<!--
-<div id="page-wrap">
-	<h2>Posts</h2>
-	
-	<ul class="page-list">
-	  
-	      <li><a href="/example/">
-	          Example Page
-	      </a>- 2014-01-01 12:00:00</li>
-	  
-	</ul>
-</div>
--->
+</body>
+</html>
