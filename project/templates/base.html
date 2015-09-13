@@ -7,8 +7,25 @@
 </head>
 
 <body>
-{% block content %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-{% endblock %}
+
+  <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;">
+        <li class="blue darken-3" style='height: 200px; color: white; padding-top: 20px;'>
+          <h4>Matt Leach</h4>
+
+        </li>
+        <li class="bold"><a href="about" class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="blog" class="waves-effect waves-teal">Blog</a></li>
+
+
+    </ul>
+    <div class='main' style='padding-left: 240px;'>
+      {% block content %}
+
+      {% endblock %}
+    </div>
 </body>
 </html>

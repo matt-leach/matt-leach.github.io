@@ -25,15 +25,7 @@
     <div class='main' style='padding-left: 240px;'>
       
 
-<style>
-html {
-  background: url(/static/background.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-</style>
+Hello
 
 
 
