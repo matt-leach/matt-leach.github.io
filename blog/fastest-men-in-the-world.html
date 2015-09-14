@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Matt Leach</title>
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/static/base.css">
+</head>
+
+<body>
+    <div class='main'>
+      
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="http://datamaps.github.io/scripts/0.4.0/datamaps.all.js"></script>
+
+<h3>Where do the fastest men in the world come from?</h3>
+<h5><i>13 September 2015</i></h5>
+<p>
+  In track and field; whether at the Olympics or the recent World Championships
+  the same countries / areas always seem to excel at certain events. Americans
+  and Jamaicans win the sprints while East Africans win the distance events.
+</p>
+
+<p>
+  <a href='http://www.alltime-athletics.com/'>All Time Athletics</a> contains
+  the top performers in each event, from the <a href='http://www.alltime-athletics.com/m_100ok.htm'>Men's 100m</a>
+  to the <a href='http://www.alltime-athletics.com/whepaok.htm'>Women's Heptathlon</a>. I decided to scrape this data
+  and plot some choropleth maps showing better where the top performers were from.
+</p>
+
+<p>
+  First off I used the python <i>requests</i> and <i>Beautiful Soup</i> libraries to scrape
+  the data and dump it into json files. After this I used <a href='http://datamaps.github.io/'>DataMaps</a>;
+  a cool D3 library making it really easy to create map visualizations.
+</p>
+
+<p>
+  The maps below use data of the top 1000 unique performers in the individual event.
+</p>
+
+<h4>Men's Hammer</h4>
+<div id="container" class='map'></div>
+<script>
+
+  data = {
+    "EGY": {
+        "fillKey": "low"
+    },
+    "USA": {
+        "fillKey": "low"
+    },
+    "UKR": {
+        "fillKey": "low"
+    },
+    "SUI": {
+        "fillKey": "low"
+    },
+    "CRO": {
+        "fillKey": "low"
+    },
+    "GER": {
+        "fillKey": "low"
+    },
+    "HUN": {
+        "fillKey": "low"
+    },
+    "UZB": {
+        "fillKey": "low"
+    },
+    "POL": {
+        "fillKey": "low"
+    },
+    "BUL": {
+        "fillKey": "low"
+    },
+    "FRA": {
+        "fillKey": "low"
+    },
+    "EST": {
+        "fillKey": "low"
+    },
+    "FRG": {
+        "fillKey": "low"
+    },
+    "SVK": {
+        "fillKey": "low"
+    },
+    "LTU": {
+        "fillKey": "low"
+    },
+    "BLR": {
+        "fillKey": "low"
+    },
+    "SLO": {
+        "fillKey": "low"
+    },
+    "FIN": {
+        "fillKey": "low"
+    },
+    "GDR": {
+        "fillKey": "low"
+    },
+    "JPN": {
+        "fillKey": "low"
+    },
+    "TUR": {
+        "fillKey": "low"
+    },
+    "RSA": {
+        "fillKey": "low"
+    },
+    "ITA": {
+        "fillKey": "low"
+    },
+    "GRE": {
+        "fillKey": "low"
+    },
+    "RUS": {
+        "fillKey": "low"
+    },
+    "TJK": {
+        "fillKey": "low"
+    },
+    "CZE": {
+        "fillKey": "low"
+    }
+}
+
+var basic_choropleth = new Datamap({
+  element: document.getElementById("container"),
+  projection: 'mercator',
+  fills: {
+    defaultFill: "#ABDDA4",
+    low: "#333333"
+  },
+  data: data});
+</script>
+
+
+
+
+    </div>
+</body>
+</html>

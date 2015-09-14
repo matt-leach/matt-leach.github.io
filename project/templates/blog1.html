@@ -8,10 +8,32 @@
   <script src="http://datamaps.github.io/scripts/0.4.0/datamaps.all.js"></script>
 
 <h3>Where do the fastest men in the world come from?</h3>
+<h5><i>13 September 2015</i></h5>
+<p>
+  In track and field; whether at the Olympics or the recent World Championships
+  the same countries / areas always seem to excel at certain events. Americans
+  and Jamaicans win the sprints while East Africans win the distance events.
+</p>
 
+<p>
+  <a href='http://www.alltime-athletics.com/'>All Time Athletics</a> contains
+  the top performers in each event, from the <a href='http://www.alltime-athletics.com/m_100ok.htm'>Men's 100m</a>
+  to the <a href='http://www.alltime-athletics.com/whepaok.htm'>Women's Heptathlon</a>. I decided to scrape this data
+  and plot some choropleth maps showing better where the top performers were from.
+</p>
 
+<p>
+  First off I used the python <i>requests</i> and <i>Beautiful Soup</i> libraries to scrape
+  the data and dump it into json files. After this I used <a href='http://datamaps.github.io/'>DataMaps</a>;
+  a cool D3 library making it really easy to create map visualizations.
+</p>
 
-<div id="container" style="width: 100%;"></div>
+<p>
+  The maps below use data of the top 1000 unique performers in the individual event.
+</p>
+
+<h4>Men's Hammer</h4>
+<div id="container" class='map'></div>
 <script>
 
   data = {

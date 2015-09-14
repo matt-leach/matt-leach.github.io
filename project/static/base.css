@@ -9,3 +9,19 @@ html { font-family: 'Josefin Slab', serif; font-weight: 400; font-size: 1.5em; }
 }
 
 .main { max-width: 800px; }
+
+.map {
+    position: relative;
+    margin: 0 auto;
+    width: 750px;
+    height: 500px;
+}
+
+a {
+  color: #BB0D50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

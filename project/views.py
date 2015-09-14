@@ -7,6 +7,6 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/about.html')
+@app.route('/blog/fastest-men-in-the-world.html')
 def about():
-    return render_template('about.html')
+    return render_template('blog1.html')
