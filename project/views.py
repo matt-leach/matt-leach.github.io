@@ -8,5 +8,5 @@ def home():
 
 
 @app.route('/blog/fastest-men-in-the-world.html')
-def about():
+def blog1():
     return render_template('blog1.html')

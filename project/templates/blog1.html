@@ -32,6 +32,9 @@
   The maps below use data of the top 1000 unique performers in the individual event.
 </p>
 
+<button onclick='updateMap("m_100")'>Men's 100</button>
+<button onclick='updateMap("m3000h")'>Men's 3000m Steeplechase</button>
+
 <h4>Men's 1500m</h4>
 <div id="container" class='map'></div>
 <script>
@@ -41,6 +44,7 @@ function updateMapFromJSON(path) {
           if (xhr.readyState === XMLHttpRequest.DONE) {
               if (xhr.status === 200) {
                 console.log('hi')
+
                 basic_choropleth.updateChoropleth(JSON.parse(xhr.responseText));
               } else {
                 console.log('oh dear')
@@ -60,10 +64,11 @@ var basic_choropleth = new Datamap({
     low: "#333333"
   },
   data: {}});
-  updateMapFromJSON('http://127.0.0.1:5000/static/m_1500.json');
+updateMapFromJSON('/static/m_1500.json');
 
+function updateMap(jsonName) {
+    updateMapFromJSON('/static/'+jsonName+'.json');
+  }
 </script>
-
-
 
 {% endblock %}
