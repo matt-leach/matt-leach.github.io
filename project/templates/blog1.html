@@ -32,93 +32,25 @@
   The maps below use data of the top 1000 unique performers in the individual event.
 </p>
 
-<h4>Men's Hammer</h4>
+<h4>Men's 1500m</h4>
 <div id="container" class='map'></div>
 <script>
-
-  data = {
-    "EGY": {
-        "fillKey": "low"
-    },
-    "USA": {
-        "fillKey": "low"
-    },
-    "UKR": {
-        "fillKey": "low"
-    },
-    "SUI": {
-        "fillKey": "low"
-    },
-    "CRO": {
-        "fillKey": "low"
-    },
-    "GER": {
-        "fillKey": "low"
-    },
-    "HUN": {
-        "fillKey": "low"
-    },
-    "UZB": {
-        "fillKey": "low"
-    },
-    "POL": {
-        "fillKey": "low"
-    },
-    "BUL": {
-        "fillKey": "low"
-    },
-    "FRA": {
-        "fillKey": "low"
-    },
-    "EST": {
-        "fillKey": "low"
-    },
-    "FRG": {
-        "fillKey": "low"
-    },
-    "SVK": {
-        "fillKey": "low"
-    },
-    "LTU": {
-        "fillKey": "low"
-    },
-    "BLR": {
-        "fillKey": "low"
-    },
-    "SLO": {
-        "fillKey": "low"
-    },
-    "FIN": {
-        "fillKey": "low"
-    },
-    "GDR": {
-        "fillKey": "low"
-    },
-    "JPN": {
-        "fillKey": "low"
-    },
-    "TUR": {
-        "fillKey": "low"
-    },
-    "RSA": {
-        "fillKey": "low"
-    },
-    "ITA": {
-        "fillKey": "low"
-    },
-    "GRE": {
-        "fillKey": "low"
-    },
-    "RUS": {
-        "fillKey": "low"
-    },
-    "TJK": {
-        "fillKey": "low"
-    },
-    "CZE": {
-        "fillKey": "low"
-    }
-}
+function updateMapFromJSON(path) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                console.log('hi')
+                basic_choropleth.updateChoropleth(JSON.parse(xhr.responseText));
+              } else {
+                console.log('oh dear')
+                return
+              }
+          }
+      };
+      xhr.open("GET", path, true);
+      xhr.send();
+  }
 
 var basic_choropleth = new Datamap({
   element: document.getElementById("container"),
@@ -127,7 +59,9 @@ var basic_choropleth = new Datamap({
     defaultFill: "#ABDDA4",
     low: "#333333"
   },
-  data: data});
+  data: {}});
+  updateMapFromJSON('http://127.0.0.1:5000/static/m_1500.json');
+
 </script>
 
 
