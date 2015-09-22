@@ -1,35 +1,134 @@
 {
-    "QAT": "rgb(9, 100, 50)", 
-    "SUD": "rgb(9, 100, 50)", 
-    "USA": "rgb(66, 100, 50)", 
-    "SOM": "rgb(4, 100, 50)", 
-    "NED": "rgb(9, 100, 50)", 
-    "UKR": "rgb(4, 100, 50)", 
-    "SUI": "rgb(4, 100, 50)", 
-    "GBR": "rgb(37, 100, 50)", 
-    "CAN": "rgb(4, 100, 50)", 
-    "DEN": "rgb(4, 100, 50)", 
-    "ETH": "rgb(28, 100, 50)", 
-    "GER": "rgb(9, 100, 50)", 
-    "POR": "rgb(4, 100, 50)", 
-    "TAN": "rgb(4, 100, 50)", 
-    "FRA": "rgb(42, 100, 50)", 
-    "FRG": "rgb(9, 100, 50)", 
-    "ESP": "rgb(51, 100, 50)", 
-    "BDI": "rgb(4, 100, 50)", 
-    "AUS": "rgb(18, 100, 50)", 
-    "DJI": "rgb(4, 100, 50)", 
-    "NZL": "rgb(9, 100, 50)", 
-    "KEN": "rgb(255, 100, 50)", 
-    "MAR": "rgb(51, 100, 50)", 
-    "ALG": "rgb(33, 100, 50)", 
-    "TUR": "rgb(4, 100, 50)", 
-    "RSA": "rgb(4, 100, 50)", 
-    "ITA": "rgb(4, 100, 50)", 
-    "BRN": "rgb(14, 100, 50)", 
-    "KSA": "rgb(4, 100, 50)", 
-    "NOR": "rgb(4, 100, 50)", 
-    "TUN": "rgb(4, 100, 50)", 
-    "RUS": "rgb(4, 100, 50)", 
-    "BRA": "rgb(4, 100, 50)"
+    "QAT": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "SUD": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "USA": {
+        "color": "rgb(66, 100, 50)", 
+        "score": 14
+    }, 
+    "SOM": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "NED": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "UKR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "SUI": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "GBR": {
+        "color": "rgb(37, 100, 50)", 
+        "score": 8
+    }, 
+    "CAN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "DEN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "ETH": {
+        "color": "rgb(28, 100, 50)", 
+        "score": 6
+    }, 
+    "GER": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "POR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "TAN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "FRA": {
+        "color": "rgb(42, 100, 50)", 
+        "score": 9
+    }, 
+    "FRG": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "ESP": {
+        "color": "rgb(51, 100, 50)", 
+        "score": 11
+    }, 
+    "BDI": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "AUS": {
+        "color": "rgb(18, 100, 50)", 
+        "score": 4
+    }, 
+    "DJI": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "NZL": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "KEN": {
+        "color": "rgb(255, 100, 50)", 
+        "score": 54
+    }, 
+    "MAR": {
+        "color": "rgb(51, 100, 50)", 
+        "score": 11
+    }, 
+    "ALG": {
+        "color": "rgb(33, 100, 50)", 
+        "score": 7
+    }, 
+    "TUR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "RSA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "ITA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "BRN": {
+        "color": "rgb(14, 100, 50)", 
+        "score": 3
+    }, 
+    "KSA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "NOR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "TUN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "RUS": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "BRA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }
 }

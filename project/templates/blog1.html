@@ -24,7 +24,7 @@
 
 <p>
   First off I used the python <i>requests</i> and <i>Beautiful Soup</i> libraries to scrape
-  the data and dump it into json files. After this I used <a href='http://datamaps.github.io/'>DataMaps</a>;
+  the data and dump it into json files. After this I used <i><a href='http://datamaps.github.io/'>DataMaps</a></i>;
   a cool D3 library making it really easy to create map visualizations.
 </p>
 
@@ -38,16 +38,14 @@
 <h4>Men's 1500m</h4>
 <div id="container" class='map'></div>
 <script>
-function updateMapFromJSON(path) {
+function updateMapFromJSON(path, map) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
           if (xhr.readyState === XMLHttpRequest.DONE) {
               if (xhr.status === 200) {
-                console.log('hi')
-
-                basic_choropleth.updateChoropleth(JSON.parse(xhr.responseText));
+                map.updateChoropleth(JSON.parse(xhr.responseText));
               } else {
-                console.log('oh dear')
+                console.log('Unable to update map')
                 return
               }
           }
@@ -55,20 +53,34 @@ function updateMapFromJSON(path) {
       xhr.open("GET", path, true);
       xhr.send();
   }
+function drawMap(jsonName) {
+  document.getElementById('container').innerHTML = '';
+  var basic_choropleth = new Datamap({
+    element: document.getElementById("container"),
+    projection: 'mercator',
+    geographyConfig: {
+      popupTemplate: function(geography, data) {
+        if (data  != null) {
+          return '<div class="hoverinfo"><b>' + geography.properties.name + '</b><br> Count:' +  data.score + ' '
+        }
+        else {
+          return '<div class="hoverinfo"><b>' + geography.properties.name
+        }
 
-var basic_choropleth = new Datamap({
-  element: document.getElementById("container"),
-  projection: 'mercator',
-  fills: {
-    defaultFill: "#ABDDA4",
-    low: "#333333"
-  },
-  data: {}});
-updateMapFromJSON('/static/m_1500.json');
+        }},
+    fills: {
+      defaultFill: "#ABDDA4",
+    },
+    data: {}});
+    updateMapFromJSON('/static/'+jsonName+'.json', basic_choropleth);
+};
 
 function updateMap(jsonName) {
-    updateMapFromJSON('/static/'+jsonName+'.json');
+    drawMap(jsonName);
   }
+
+// Start with 1500m
+updateMap('m_1500');
 </script>
 
 {% endblock %}
