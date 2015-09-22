@@ -32,10 +32,13 @@
   The maps below use data of the top 1000 unique performers in the individual event.
 </p>
 
-<button onclick='updateMap("m_100")'>Men's 100</button>
-<button onclick='updateMap("m3000h")'>Men's 3000m Steeplechase</button>
+<button onclick="updateMap('m_100', 'Men\'s 100m')">Men's 100</button>
+<button onclick="updateMap('m3000h', 'Men\'s 3000m Steeplechase')">Men's 3000m Steeplechase</button>
+<button onclick="updateMap('mtrip', 'Men\'s Triple Jump')">Men's TJ</button>
+<button onclick="updateMap('w_200', 'Women\'s 200m')">Women's 200m</button>
 
-<h4>Men's 1500m</h4>
+
+<h4 id='mapTitle'>Men's 1500m</h4>
 <div id="container" class='map'></div>
 <script>
 function updateMapFromJSON(path, map) {
@@ -75,12 +78,13 @@ function drawMap(jsonName) {
     updateMapFromJSON('/static/'+jsonName+'.json', basic_choropleth);
 };
 
-function updateMap(jsonName) {
+function updateMap(jsonName, name) {
     drawMap(jsonName);
+    document.getElementById('mapTitle').innerHTML = name;
   }
 
 // Start with 1500m
-updateMap('m_1500');
+updateMap('m_1500', "Men's 1500m");
 </script>
 
 {% endblock %}

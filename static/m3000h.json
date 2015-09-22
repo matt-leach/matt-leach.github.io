@@ -1,0 +1,118 @@
+{
+    "QAT": {
+        "color": "rgb(14, 100, 50)", 
+        "score": 3
+    }, 
+    "USA": {
+        "color": "rgb(28, 100, 50)", 
+        "score": 6
+    }, 
+    "NED": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "SWE": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "GBR": {
+        "color": "rgb(14, 100, 50)", 
+        "score": 3
+    }, 
+    "CAN": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "ETH": {
+        "color": "rgb(14, 100, 50)", 
+        "score": 3
+    }, 
+    "GER": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "BEL": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "UGA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "POL": {
+        "color": "rgb(14, 100, 50)", 
+        "score": 3
+    }, 
+    "TAN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "ROU": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "FRA": {
+        "color": "rgb(28, 100, 50)", 
+        "score": 6
+    }, 
+    "FRG": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "ESP": {
+        "color": "rgb(24, 100, 50)", 
+        "score": 5
+    }, 
+    "CHN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "AUT": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "FIN": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "KEN": {
+        "color": "rgb(255, 100, 50)", 
+        "score": 53
+    }, 
+    "GDR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "MAR": {
+        "color": "rgb(43, 100, 50)", 
+        "score": 9
+    }, 
+    "ALG": {
+        "color": "rgb(9, 100, 50)", 
+        "score": 2
+    }, 
+    "TUR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "RSA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "ITA": {
+        "color": "rgb(19, 100, 50)", 
+        "score": 4
+    }, 
+    "BRN": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "KSA": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }, 
+    "NOR": {
+        "color": "rgb(4, 100, 50)", 
+        "score": 1
+    }
+}
