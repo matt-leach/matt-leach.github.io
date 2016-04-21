@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
+    <style>
+      body {
+        font-family: ariel;
+      }
+
+      h2.title {
+        color: black;
+        text-align: center;
+      }
+
+      .axis {
+        font-family: ariel;
+        font-size: 0.7em;
+      }
+
+      text {
+        fill: black;
+        stroke: none;
+      }
+
+      .label {
+        font-size: 2em;
+      }
+
+      path {
+        fill: none;
+        stroke: black;
+        stroke-width: 2px;
+      }
+
+      .tick {
+        fill: none;
+        stroke: black;
+      }
+
+      .score-bar {
+        fill: #A71930;
+      }
+
+      .gsw-blue {
+        fill: #006BB6;
+      }
+      .gsw-gold {
+        fill: #FDB927;
+      }
+
+      .steph {
+        stroke: #FDB927;
+      }
+      .steph-bar-15-16 {
+        fill: #FDB927;
+      }
+      .steph-bar {
+        fill: #006BB6;
+      }
+      .bar-hide {
+        display: none;
+      }
+
+    </style>
+
+    <script type="text/javascript">
+
+      function draw(data) {
+          // set margins according to Mike Bostock's margin conventions
+          // http://bl.ocks.org/mbostock/3019563
+          var margin = {top: 45, right: 40, bottom: 150, left: 75};
+          var width = 960 - margin.left - margin.right,
+              height = 575 - margin.top - margin.bottom;
+
+          // append the SVG tag with height and width to accommodate for margins
+          var svg = d3.select("body")
+                      .append("svg")
+                          .attr("width", width + margin.left + margin.right)
+                          .attr("height", height + margin.top + margin.bottom)
+                      .append('g')
+                          .attr('class', 'chart')
+                          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append('text').text('Just how good is Steph Curry?')
+                .attr('x', 40).attr('y', -10)
+                .style('font-weight', 'bold')
+                .style('font-size', '1.5em')
+                .attr('class', 'title');
+
+            svg.append('text').text('This graph shows the regular season leaders for three-pointers over the last 27 years.')
+                .attr('x', 40).attr('y', 10)
+                .style('font-size', '1em')
+                .attr('class', 'subtitle')
+                .attr('opacity', 0).transition().duration(1500).attr('opacity', 1);
+
+            svg.append('text').text('Before the 2015-16 Steph had scored the most 3s in each of the previous three seasons.')
+                .attr('x', 40).attr('y', 25)
+                .attr('class', 'subtitle')
+                .attr('opacity', 0).transition().delay(1500).duration(1500).attr('opacity', 1);
+
+            svg.append('text').text('Next')
+                .attr('x', 40)
+                .attr('y', 50)
+                .attr('class', 'next')
+                .attr('opacity', 0).transition().delay(3000).duration(1000).attr('opacity', 1);
+
+            d3.select('.next').on('mouseover', function() {
+              d3.select(this).style('fill', 'blue').style('cursor', 'pointer')
+            })
+            .on('mouseaway', function() {
+              d3.select(this).style('fill', 'black').style('cursor', 'arrow')
+            })
+            .on("click", function() {
+              d3.select('.title').text('Before Steph only 2 players had scored over 250 threes in a season before.')
+              d3.csv("/static/threes.csv", draw_dotted)
+            });
+
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1)
+                .domain(data.map(function(d) { return d.Season; }));
+
+            var y = d3.scale.linear()
+                .range([height, 0])
+                .domain([0, 450]); //d3.max(data, function(d) { console.log(d.goals); return d.goals; })]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .tickValues(x.domain().filter(function(d, i) { return !(i % 3) }));
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+            // Append SVG to page corresponding to the D3 x-axis
+            svg.append('g')
+                .attr('class', 'x axis')
+                .attr('transform', "translate(0," + height + ")")
+                .call(xAxis);
+
+            // Append SVG to page corresponding to the D3 y-axis
+            svg.append('g')
+                .attr('class', 'y-axis axis')
+                .call(yAxis);
+
+           svg.selectAll(".score-bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("x", function(d) { return x(d.Season); })
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) { return y(d.goals); })
+            .attr("height", function(d) { return height - y(d.goals); })
+            .attr("class", function(d) {
+              if (d.Season == '15-16') { return "score-bar steph-bar-15-16 bar-hide bar-"+d.Season}
+              else if (d.Player == 'Stephen Curry') { return "score-bar steph-bar bar-"+d.Season}
+              else { return "score-bar bar-"+d.Season};
+            })
+            .attr("opacity", function(d) {
+              if (d.Season == '15-16') {return 0 }
+              else { return 0.8 }
+            })
+            .on('mouseover', function(d, ix) {
+              d3.select('.name-'+d.Season).style('display', 'block');
+              d3.select('.score-'+d.Season).style('display', 'block');
+              d3.select(this).style('opacity', 1)
+            })
+            .on('mouseout', function(d, ix) {
+              d3.select('.name-'+d.Season).style('display', 'none');
+              d3.select('.score-'+d.Season).style('display', 'none');
+              d3.select(this).style('opacity', 0.8)
+            });
+
+            d3.selectAll('.steph-bar')
+              .attr('opacity', 0)
+              .transition()
+              .delay(1500)
+              .duration(1500)
+              .attr('opacity', 1);
+
+            svg.selectAll(".text")
+              .data(data)
+              .enter().append("text")
+              .attr("x", function(d) { return x(d.Season) + 6;})
+              .attr("y", function(d) { return y(+d.goals + 20);})
+              .text(function(d) {
+                return d.Player;
+              })
+              .attr("text-anchor", "middle")
+              .style('display', 'none')
+              .attr('class', function(d, ix) {return 'name-' + d.Season})
+
+              svg.selectAll(".text-scores")
+                .data(data)
+                .enter().append("text")
+                .attr("x", function(d) { if (d.goals < 100 ) {return x(d.Season) + 4 }; return x(d.Season);})
+                .attr("y", function(d) { return y(+d.goals - 20);})
+                .text(function(d) { return d.goals })
+                .style('fill', 'white')
+                .style('font-size', '0.8em')
+                .style('display', 'none')
+                .attr('class', function(d, ix){ return 'score-text score-'+d.Season});
+
+
+            // y axis
+            svg.append("text")
+              .attr("text-anchor", "end")
+              .attr("y", -30)
+              .attr("x", -100)
+              .attr("transform", "rotate(-90)")
+              .text("Threes");
+
+              // x axis
+              svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", width / 2)
+                .attr("y", height + 30)
+                .text("Season");
+        };
+
+        function draw_dotted(data) {
+          d3.selectAll('.subtitle').style('display', 'none');
+          d3.select('.next').style('display', 'none');
+
+          d3.select('.chart').append('text').text('Next')
+              .attr('x', 40)
+              .attr('y', 10)
+              .style('font-size', '1em')
+              .attr('class', 'next2')
+              .attr('opacity', 0)
+              .transition()
+              .delay(1500)
+              .duration(1000)
+              .attr('opacity', 1);
+
+          d3.select('.next2').on('mouseover', function() {
+            d3.select(this).style('fill', 'blue').style('cursor', 'pointer')
+          }).on('mouseaway', function() {
+            d3.select(this).style('fill', 'black').style('cursor', 'arrow')
+          })
+          d3.select(".next2")
+            .on("click", function() {
+              d3.select('.two50').style('display', 'none')
+              d3.select('.title').text('Then in 2015-16 he scored over 100 more than anyone previously had done.')
+              d3.csv("/static/steph.csv", draw_steph)
+            });
+
+          var margin = {top: 45, right: 40, bottom: 150, left: 75};
+          var width = 960 - margin.left - margin.right,
+              height = 575 - margin.top - margin.bottom;
+
+          var svg = d3.select(".chart");
+
+          // Draw dotted line at 250
+          var y = d3.scale.linear().domain([0, 450]).range([height, 0]);
+          var x_cts = d3.scale.linear().domain([0, 37]).range([0, width]);
+
+          var line = d3.svg.line()
+            .x(function(d, i) {return x_cts(i);})
+            .y(function(d) {return y(250);})
+
+          var path = svg.append("path")
+            .attr("d", line(data))
+            .attr("class", "two50")
+          //  .style("stroke-dasharray", ("7, 2"))
+            .style('stroke-width', '1px');
+
+          var totalLength = path.node().getTotalLength();
+          var dashing = "7, 7";
+          var dashLength = 14;
+          var dashCount = Math.ceil( totalLength / dashLength );
+          var newDashes = new Array(dashCount).join( dashing + " " );
+          var dashArray = newDashes + " 0, " + totalLength;
+
+          path.attr("stroke-dasharray", dashArray)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(3000)
+              .ease("linear")
+              .attr("stroke-dashoffset", 0)
+              .each('end', function() {
+                d3.select('.score-05-06').style('display', 'block');
+                d3.select('.name-05-06').style('display', 'block');
+                d3.select('.score-95-96').style('display', 'block');
+                d3.select('.name-95-96').style('display', 'block');
+                d3.select('.score-12-13').style('display', 'block');
+                d3.select('.name-12-13').style('display', 'block');
+                d3.select('.bar-05-06').style('opacity', 1);
+                d3.select('.bar-95-96').style('opacity', 1);
+                d3.select('.bar-12-13').style('opacity', 1);
+                d3.select('.bar-14-15').style('opacity', 1);
+                d3.select('.bar-13-14').style('opacity', 1);
+                d3.select('.score-14-15').style('display', 'block');
+                d3.select('.score-13-14').style('display', 'block');
+              });
+        }
+
+        function draw_steph(data) {
+          d3.select('.next2').style('display', 'none');
+          // revert changes
+          d3.select('.score-05-06').style('display', 'none');
+          d3.select('.name-05-06').style('display', 'none');
+          d3.select('.score-95-96').style('display', 'none');
+          d3.select('.name-95-96').style('display', 'none');
+          d3.select('.score-12-13').style('display', 'none');
+          d3.select('.name-12-13').style('display', 'none');
+          d3.select('.bar-05-06').style('opacity', 0.8);
+          d3.select('.bar-95-96').style('opacity', 0.8);
+          d3.select('.bar-12-13').style('opacity', 0.8);
+          d3.select('.bar-14-15').style('opacity', 0.8);
+          d3.select('.bar-13-14').style('opacity', 0.8);
+          d3.select('.score-14-15').style('display', 'none');
+          d3.select('.score-13-14').style('display', 'none');
+
+          var margin = {top: 45, right: 60, bottom: 150, left: 75};
+          var width = 960 - margin.left - margin.right,
+              height = 575 - margin.top - margin.bottom;
+            // append the SVG tag with height and width to accommodate for margins
+            var svg = d3.select(".chart");
+
+            var x = d3.scale.linear().domain([0, 82]).range([0, width]);
+            var y = d3.scale.linear().domain([0, 450]).range([height, 0]);
+
+            var line = d3.svg.line()
+              .x(function(d, i) {return x(d.Game);})
+              .y(function(d) {return y(d.Threes);})
+
+            var path = svg.append("path")
+              .attr("d", line(data))
+              .attr("class", "steph");
+            d3.select('.bar-hide').style('display', 'block');
+            var totalLength = path.node().getTotalLength();
+
+            path.attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                .transition()
+                .duration(6000)
+                .ease("linear")
+                .attr("stroke-dashoffset", 0)
+                .each("end", function() {
+                  d3.select(".steph-bar-15-16").transition().duration(1000).attr('opacity', 1);
+                  d3.select('.score-15-16').style('display', 'block');
+                  d3.select('bar-15-16').transition().duration(1000).attr('opacity', 1)
+                });
+            svg.append('circle')
+              .attr('cx', x(20)).attr('cy', y(102)).attr('r', 4).style('fill', '#FDB927')
+              .style('opacity', 0)
+              .transition()
+              .duration(400)
+              .delay(1200)
+              .ease('linear')
+              .style('opacity', 1)
+              .attr('class', 'graph-text');
+            svg.append('text')
+              .attr('x', x(21)).attr('y', y(100))
+              .text('2nd December: Steph reaches 100 against the Hornets')
+              .style('fill', '#FDB927')
+              .style('opacity', 0)
+              .transition()
+              .duration(400)
+              .delay(1200)
+              .ease('linear')
+              .style('opacity', 1)
+              .attr('class', 'graph-text');
+
+            // Best ever
+            svg.append('circle')
+              .attr('cx', x(58)).attr('cy', y(288)).attr('r', 4).style('fill', '#FDB927')
+              .style('opacity', 0)
+              .transition()
+              .duration(400)
+              .delay(4500)
+              .ease('linear')
+              .style('opacity', 1)
+              .attr('class', 'graph-text');
+
+            svg.append('text')
+              .attr('x', x(21)).attr('y', y(295))
+              .text('Against Oklahoma City Thunder in his 58th game Steph overtakes his own record')
+              .style('fill', '#FDB927')
+              .style('opacity', 0)
+              .attr('class', 'graph-text')
+              .transition()
+              .duration(400)
+              .delay(4500)
+              .ease('linear')
+              .style('opacity', 1);
+
+              // Overall
+              svg.append('text')
+                .attr('x', x(31.5)).attr('y', y(398))
+                .text('The Warriors overtake the Bulls with 73 wins, Steph finishing on 402 threes')
+                .style('fill', '#FDB927')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay(6000)
+                .ease('linear')
+                .style('opacity', 1)
+                .attr('class', 'graph-text');
+
+
+            d3.select('.chart').append('text').text('Next')
+                    .attr('x', 40)
+                    .attr('y', 10)
+                    .style('font-size', '1em')
+                    .attr('class', 'next3')
+                    .attr('opacity', 0)
+                    .transition()
+                    .delay(1500)
+                    .duration(1000)
+                    .attr('opacity', 1);
+
+                d3.select('.next3').on('mouseover', function() {
+                  d3.select(this).style('fill', 'blue').style('cursor', 'pointer')
+                }).on('mouseaway', function() {
+                  d3.select(this).style('fill', 'black').style('cursor', 'arrow')
+                })
+                d3.select(".next3")
+                  .on("click", function() {
+                    d3.select('.two50').style('display', 'none')
+                    d3.select('.title').text('While he has taken the most attempts, his success rate of 45% is also the best ever')
+                    d3.csv("/static/threes.csv", attempts)
+                  });
+          };
+
+
+
+          // Function to show the attempts
+          function attempts(data) {
+            d3.select(".next3").remove()
+            // hide existing
+            d3.selectAll('.graph-text').style('display', 'none');
+            d3.select('.steph').style('display', 'none');
+
+            var margin = {top: 45, right: 40, bottom: 150, left: 75};
+            var width = 960 - margin.left - margin.right,
+                height = 575 - margin.top - margin.bottom;
+            var y = d3.scale.linear()
+                .range([height, 0])
+                .domain([0, 900]);
+
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1)
+                .domain(data.map(function(d) { return d.Season; }));
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+          d3.select('.y-axis')
+              .attr('class', 'y-axis axis')
+              .transition().duration(1500).ease("sin-in-out")
+              .call(yAxis);
+
+          d3.selectAll(".score-bar")
+           .data(data)
+           .transition().duration(1500).ease('sin-in-out')
+           .attr("y", function(d) { return y(d.goals); })
+           .attr('height', function(d) { return height - y(d.goals); });
+
+          d3.select('.chart').selectAll('.attempts-bar')
+            .data(data)
+            .enter()
+            .insert("rect", ':first-child')
+            .attr("x", function(d) { return x(d.Season); })
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) { return y(d.attempt); })
+            .attr("height", function(d) { return height - y(d.attempt); })
+            .attr("opacity", function(d) {
+              return 0.4
+            })
+            .attr("class", function(d) {
+              if (d.Season == '15-16') { return "score-bar steph-bar-15-16 bar-"+d.Season}
+              else if (d.Player == 'Stephen Curry') { return "score-bar steph-bar bar-"+d.Season}
+              else { return "score-bar bar-"+d.Season};
+            });
+
+            d3.selectAll(".score-text").remove();
+            d3.select('.score-15-16').remove();
+
+            d3.select('.chart').selectAll('.text-percent')
+              .data(data)
+              .enter().append("text")
+              .attr("x", function(d) { return x(d.Season);})
+              .attr("y", function(d) { return y(+d.goals-28);})
+              .text(function(d) { return d.percentage })
+              .style('fill', 'white')
+              .style('font-size', '0.8em')
+              .attr('class', function(d, ix){ return 'percent-'+d.Season});
+        }
+      </script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    // load our data file asynchronously and pass the data
+    // to the draw function once it is loaded.
+    d3.csv("/static/threes.csv", draw);
+    //d3.csv('threes.csv', attempts);
+    </script>
+  </body>
+</html>

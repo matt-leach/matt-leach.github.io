@@ -10,3 +10,8 @@ def home():
 @app.route('/blog/fastest-men-in-the-world.html')
 def blog1():
     return render_template('blog1.html')
+
+
+@app.route('/blog/steph.html')
+def blog2():
+    return render_template('steph.html')
