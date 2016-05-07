@@ -15,3 +15,7 @@ def blog1():
 @app.route('/blog/steph.html')
 def blog2():
     return render_template('steph.html')
+
+@app.route('/blog/strava.html')
+def strava():
+    return render_template('strava.html')
