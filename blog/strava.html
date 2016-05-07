@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Matt Leach</title>
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/static/base.css">
+</head>
+
+<body>
+    <div class='menu'>
+      <p><a href='/' class='menu-link'>about</a></p>
+      <p><a href='https://github.com/matt-leach' class='menu-link' target='blank'>projects</a></p>
+    </div>
+
+
+    <div class='main'>
+      
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+
+  <h2>Finding Similar Strava Activities</h2>
+
+  <p>As a serious runner I am a huge fan of Strava
+     which I use to track my <a href='https://strava.com/athletes/1840470' target='blank'>training</a>.
+   </p>
+   <p>
+     Strava has a feature called <a href='http://blog.strava.com/how-many-matched-runs-you-have-9021/' target='blank'>
+       matched runs</a> whereby you can see if you've run the same route before and track your progress over time.
+       However often I want to try and find similar <i>activities</i> (potentially with a similar route but not necessarily).
+       For example if I've just done a 5 mile tempo run I might want to find other similar workouts.
+   </p>
+   <p>I therefore set out to try do this and using the Strava <a href='https://strava.github.io/api/' target='blank'>API</a>
+      and some machine learning techniques.</p>
+
+
+  <h3>Extracting and Cleaning Data</h3>
+  <p>
+    I extracted my activity data (including distance, activity type, speed, etc) from the Strava API
+    along with the latitude and longitude coordinates from the run. I have
+  </p>
+
+  <h3>Creating a Similarity Metric</h3>
+  <p>
+    There are a couple of main ways two running activities can be similar. Either they could have a similar
+    route or they could have been similar types of runs with similar statistics. For example
+  </p>
+
+  <h4>Finding Activities with Similar Routes</h4>
+  <p>
+    Rather than finding activities with exactly the same route (and hence having a very similar distance)
+    I also wanted to find activities where the routes matched up for part of the run. I could not find
+    a huge amount of information on the internet but inspired by the <a href='https://en.wikipedia.org/wiki/Hausdorff_distance'>
+      Hausdorff distance</a> I decided to calculate the average minimum distance from one path to the other.
+    More formally given paths $ X = {x_1, \cdots,  x_n}, Y = {y_1, \cdots, y_m} $ I calculated
+    <div style='text-align: center'><span>$ dist(X, Y) = \frac{\sum_{i=1}^n min_{y \in Y} |x_i - y_i|}{n}$</span></div><br>
+    Note that this is not commutative: $dist(X, Y) \neq dist(Y, X) $. Hence a true similarity measure will need to take
+    both values into account.
+  </p>
+  <p>
+    Calculating this distance metric for a pair of Strava activities takes $ O(nm) $ time. My activities have around
+    500-1000 coordinate pairs so I subset these by only taking every tenth coordinate to speed this up by 100x as
+    previously it was taking a little too long. While this increased the metric it did so systematically.
+  </p>
+  <p>
+    The following map is a demo of the calculation.
+  </p>
+
+  <h4>Finding Activities with Similar Statistics</h4>
+  <p>
+
+
+
+
+
+    </div>
+</body>
+</html>
