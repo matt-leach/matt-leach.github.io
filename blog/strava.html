@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Matt Leach</title>
-  <link href='https://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+  <link rel='stylesheet' href="/static/skeleton.css" tyle='text/css' />
   <link rel="stylesheet" type="text/css" href="/static/base.css">
 </head>
 
@@ -25,11 +25,13 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src='/static/strava.js'></script>
 
-  <h2>Finding Similar Strava Activities</h2>
+  <h1>Finding Similar Strava Activities</h1>
 
-  <p>As a serious runner I am a huge fan of Strava
+  <p>As a fairly serious runner I am a huge fan of Strava
      which I use to track my <a href='https://strava.com/athletes/1840470' target='blank'>training</a>.
    </p>
    <p>
@@ -38,21 +40,30 @@
        However often I want to try and find similar <i>activities</i> (potentially with a similar route but not necessarily).
        For example if I've just done a 5 mile tempo run I might want to find other similar workouts.
    </p>
-   <p>I therefore set out to try do this and using the Strava <a href='https://strava.github.io/api/' target='blank'>API</a>
+   <p>I therefore set out to try do this using the <a href='https://strava.github.io/api/' target='blank'>Strava API</a>
       and some machine learning techniques.</p>
 
 
   <h3>Extracting and Cleaning Data</h3>
   <p>
     I extracted my activity data (including distance, activity type, speed, etc) from the Strava API
-    along with the latitude and longitude coordinates from the run. I have
+    along with the latitude and longitude coordinates from the run. I took my last 600 runs (roughly the last 18 months).
+    This is over 3500 miles and 30 races with the majority of runs in Cambridge, UK and San Francisco, CA. The Strava heatmap for this
+    period can be found <a href='https://www.strava.com/athletes/1840470/heatmaps/5605e11e#3/49.88590/-47.64959' target='blank'>here</a>.
   </p>
 
   <h3>Creating a Similarity Metric</h3>
   <p>
     There are a couple of main ways two running activities can be similar. Either they could have a similar
-    route or they could have been similar types of runs with similar statistics. For example
+    route or they could have been similar types of runs with similar statistics. For example the first two runs
+    below are on a very similar route but are run at slightly different paces whereas the latter two runs are
+    at a similar pace but obviously very different routes.
   </p>
+    <div class='row'>
+      <div id="similar-1" class='similar-map columns four'></div>
+      <div id="similar-2" class='similar-map columns four'></div>
+      <div id="similar-3" class='similar-map columns four'></div>
+  </div>
 
   <h4>Finding Activities with Similar Routes</h4>
   <p>
