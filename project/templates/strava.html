@@ -8,6 +8,7 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src='/static/strava.js'></script>
@@ -97,10 +98,17 @@
   <p>
     Therefore I plotted a histogram of the distances for each run:
   </p>
+  <div id='hist1'></div>
   <p>
     There is a fair amount of right skew as expected - the mean length of run is around 6 miles but I've
     run up to 18 miles. Therefore I tried to transform the data to make it normal. Using a log transform
     the data was still skewed by a square root transform gave very nice looking data:
+  </p>
+  <div id='hist2'></div>
+  <p>
+    The square rooted distance data can therefore be used with the Gaussian similarity measure.
+    Applying similar techniques to other variables gives us a run statistics similarity
+    measure.
   </p>
 
 
@@ -135,6 +143,11 @@
         print activity['name'], similar[0]['name'], similar[1]['name'], similar[2]['name']
   </code></pre>
 
+  <p>
+    This is not hugely scientific but I found it gave good results for my runs. With
+    runs from more athletes this could be improved.
+  </p>
+
   <h3>Results</h3>
 
   Select route:
@@ -146,15 +159,5 @@
   <p>
     All code for this project is located on <a href='https://github.com/matt-leach/strava-similarity' target='blank'>github</a>.
   </p>
-
-  <h3>Further Work</h3>
-  <p>
-    This could be developed a lot further by creating a web app and allowing people to sign in and see
-    their own similar runs. Additionally there could be a lot more work done to the similarity measures
-    to improve the algorithm.
-  </p>
-
-
-
 
 {% endblock %}
