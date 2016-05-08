@@ -35,3 +35,13 @@ a:hover {
 .similar-map {
   height: 300px;
 }
+
+.run-deets {
+  font-style: italic;
+  font-size: 17px;
+}
+
+path {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
