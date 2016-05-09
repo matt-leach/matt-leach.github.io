@@ -68,3 +68,15 @@ path {
   height: 300px;
   width: 600px;
 }
+
+#map-example {
+  height: 300px;
+}
+
+.littlePath {
+  stroke-opacity: 0.5;
+}
+
+.mainPath {
+  stroke-width: 5px;
+}

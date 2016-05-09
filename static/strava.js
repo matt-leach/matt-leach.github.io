@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
       add_details('run-3-3-deets', data[3]);
     })
 
+    d3.json('/static/GGP Sundays.json', function(data){
+      plot_min_dist(data[1]['path'], data[2]['path']);
+    })
+
 }, false);
 
 
@@ -52,6 +56,45 @@ function plot_map(mapid, latlng) {
 
   var polyline = L.polyline(latlng, {color: 'red'}).addTo(similar1);
 }
+
+function plot_min_dist(latlng1, latlng2) {
+  var themap = L.map('map-example', {scrollWheelZoom: false}).setView(latlng1[parseInt(latlng1.length / 5)], 13);
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoibWF0dC1sZWFjaCIsImEiOiJjaW54djNnb2IxN2pqdTJtM3ViOTJjOXU4In0.f2WCG6PNDQcnbJhTcdSEOA',
+  }).addTo(themap);
+
+  var polyline = L.polyline(latlng1, {color: 'red'}).addTo(themap);
+  var plotline2 = L.polyline(latlng2, {color: 'blue'}).addTo(themap);
+
+  for (var ii=0; ii < latlng2.length; ii++) {
+    var circle = L.circle(latlng2[ii], 10, {
+      color: 'black',
+      fillColor: 'black',
+      fillOpacity: 0.5
+    }).addTo(themap);
+
+    var line = L.polygon([
+      latlng2[ii],
+      latlng1[55]
+    ],
+  {color: 'grey', opacity: 0.5, className: 'littlePath'}).addTo(themap);
+  };
+  var circle = L.circle(latlng1[55], 70, {
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 1
+  }).addTo(themap);
+
+  var line = L.polygon([
+    latlng2[60], latlng1[55]],
+    {color: 'black', className: 'mainPath'}
+  ).addTo(themap);
+}
+
+
 
 function add_details(spanid, data) {
   d3.select('#'+spanid).html('<a href="https://app.strava.com/activities/' + data['id'] + '" target="blank"> \
