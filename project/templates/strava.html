@@ -132,24 +132,6 @@
     after normalizing. Because the route measure could be huge (e.g. comparing runs in the UK and USA)
     the measures could not just be added or multiplied.
   </p>
-  <pre><code>
-    def get_top_3(activity, other_activities):
-        ''' finds the top 3 most similar activities to activity '''
-        quite_close = []
-        for test_activity in other_activities:
-            route_1 = route_similarity(activity['path'], test_activity['path'])
-            route_2 = route_similarity(test_activity['path'], activity['path'])
-            route_sim = route_1 + route_2  # combine by adding
-            run_sim = run_similarity(activity, test_activity)
-
-            if run_sim < 2:  # eliminate any which aren't fairly close
-                # 0.7 multiplier works quite well for me
-                quite_close.append({'name': test_activity['name'], 'val': min(route_sim, run_sim*0.7)})
-
-        similar = sorted(quite_close, key=lambda x: x['val'])  # sort by the value
-        print activity['name'], similar[0]['name'], similar[1]['name'], similar[2]['name']
-  </code></pre>
-
   <p>
     This is not hugely scientific but I found it gave good results for my runs. With
     runs from more athletes this could be improved.
