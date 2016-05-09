@@ -35,6 +35,9 @@ a:hover {
 .similar-map {
   height: 300px;
 }
+.eg-map {
+  height: 300px;
+}
 
 .run-deets {
   font-style: italic;
@@ -59,4 +62,9 @@ path {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+.main-map {
+  height: 300px;
+  width: 600px;
 }

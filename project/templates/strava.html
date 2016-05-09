@@ -136,8 +136,9 @@
             route_sim = route_1 + route_2  # combine by adding
             run_sim = run_similarity(activity, test_activity)
 
-            if run_sim < 1:  # eliminate any which aren't fairly close
-                quite_close.append({'name': test_activity['name'], 'val': min(0.1*route_sim, run_sim)})
+            if run_sim < 2:  # eliminate any which aren't fairly close
+                # 0.7 multiplier works quite well for me
+                quite_close.append({'name': test_activity['name'], 'val': min(route_sim, run_sim*0.7)})
 
         similar = sorted(quite_close, key=lambda x: x['val'])  # sort by the value
         print activity['name'], similar[0]['name'], similar[1]['name'], similar[2]['name']
@@ -149,10 +150,115 @@
   </p>
 
   <h3>Results</h3>
+  <p>
+    Below are some selected examples this technique produces:
+  </p>
 
-  Select route:
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-1-deets' class='run-deets'></span>
+      <div id='run-1' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Here we get 3 fairly similar activities in terms of statistics but two are
+    similar routes and 1 is completely different (but is almost idential in terms
+    of pace and distance).
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-1-1-deets' class='run-deets'></span>
+      <div id="run-1-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-1-2-deets' class='run-deets'></span>
+      <div id="run-1-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-1-3-deets' class='run-deets'></span>
+      <div id="run-1-3" class='eg-map'></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+  <br>
 
-  Top 3 similar:
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-2-deets' class='run-deets'></span>
+      <div id='run-2' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Here we match races - which have very distinct statistics to other runs.
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-2-1-deets' class='run-deets'></span>
+      <div id="run-2-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-2-2-deets' class='run-deets'></span>
+      <div id="run-2-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-2-3-deets' class='run-deets'></span>
+      <div id="run-2-3" class='eg-map'></div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+  <br>
+
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-3-deets' class='run-deets'></span>
+      <div id='run-3' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Finally here we match very similar workouts - the first two match by
+    route and statistics whereas the latter two match by the statistics.
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-3-1-deets' class='run-deets'></span>
+      <div id="run-3-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-3-2-deets' class='run-deets'></span>
+      <div id="run-3-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-3-3-deets' class='run-deets'></span>
+      <div id="run-3-3" class='eg-map'></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+
+  <h3>Further Work</h3>
+  <p>
+    There is a lot more I would like to do with this - initally I would like to
+    create a web app to allow others to sign in using the Strava API and find
+    their own similar routes.
+  </p>
+  <p>
+    In addition I think there could be a fair amount more analysis of the similarity
+    measures and combining them. Something that could be interesting is looking at the
+    various paces run throughout the run rather than just the average as this would
+    be a good way to find very similar activities.
+  </p>
 
   <h3>Code</h3>
 
