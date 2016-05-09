@@ -35,3 +35,36 @@ a:hover {
 .similar-map {
   height: 300px;
 }
+.eg-map {
+  height: 300px;
+}
+
+.run-deets {
+  font-style: italic;
+  font-size: 17px;
+}
+
+path {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.main-map {
+  height: 300px;
+  width: 600px;
+}

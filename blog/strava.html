@@ -10,7 +10,7 @@
 
 <body>
     <div class='menu'>
-      <p><a href='/' class='menu-link'>about</a></p>
+      <p><a href='/' class='menu-link'>home</a></p>
       <p><a href='https://github.com/matt-leach' class='menu-link' target='blank'>projects</a></p>
     </div>
 
@@ -25,6 +25,7 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src='/static/strava.js'></script>
@@ -59,12 +60,22 @@
     below are on a very similar route but are run at slightly different paces whereas the latter two runs are
     at a similar pace but obviously very different routes.
   </p>
-    <div class='row'>
-      <div id="similar-1" class='similar-map columns four'></div>
-      <div id="similar-2" class='similar-map columns four'></div>
-      <div id="similar-3" class='similar-map columns four'></div>
+    <div class='row' style='text-align: center'>
+      <div class='columns four'>
+        <span class='run-deets'>7.4 miles in 52 minutes</span>
+        <div id="similar-1" class='similar-map'></div>
+      </div>
+      <div class='columns four'>
+        <span class='run-deets'>7.4 miles in 48 minutes</span>
+        <div id="similar-2" class='similar-map'></div>
+      </div>
+      <div class='columns four'>
+        <span class='run-deets'>7.7 miles in 50 minutes</span>
+        <div id="similar-3" class='similar-map'></div>
+      </div>
   </div>
-
+  <br>
+  <br>
   <h4>Finding Activities with Similar Routes</h4>
   <p>
     Rather than finding activities with exactly the same route (and hence having a very similar distance)
@@ -79,7 +90,8 @@
   <p>
     Calculating this distance metric for a pair of Strava activities takes $ O(nm) $ time. My activities have around
     500-1000 coordinate pairs so I subset these by only taking every tenth coordinate to speed this up by 100x as
-    previously it was taking a little too long. While this increased the metric it did so systematically.
+    previously it was taking a little too long. While this increased the metric it did so systematically for each
+    pair of activities.
   </p>
   <p>
     The following map is a demo of the calculation.
@@ -87,9 +99,189 @@
 
   <h4>Finding Activities with Similar Statistics</h4>
   <p>
+    The main goal of this was to find activities not just with similar routes. To find
+    activities which are similar from a statistical sense we need to create a similarity
+    metric. From the Strava API we have various details about runs. The main details I
+    wanted to take into account were distance, speed and activity type. However there are
+    also other details such as elevation gain, time of day, day of week that were less
+    important to me but might want to be added to tune the metric.
+  </p>
+
+  <p>
+    A fairly classic similarity metric used in machine learning (for example in Spectral Clustering)
+    is the Gaussian ($ e^{-\|s_1 - s_2\|^2/2\sigma^2}$). However this working well would rely on the
+    distance and pace data for my runs being normally distributed.
+  </p>
+  <p>
+    Therefore I plotted a histogram of the distances for each run:
+  </p>
+  <div id='hist1'></div>
+  <p>
+    There is a fair amount of right skew as expected - the mean length of run is around 6 miles but I've
+    run up to 18 miles. Therefore I tried to transform the data to make it normal. Using a log transform
+    the data was still skewed by a square root transform gave very nice looking data:
+  </p>
+  <div id='hist2'></div>
+  <p>
+    The square rooted distance data can therefore be used with the Gaussian similarity measure.
+    Applying similar techniques to other variables gives us a run statistics similarity
+    measure.
+  </p>
 
 
+  <h4>Combining the Measures</h4>
+  <p>
+    The final step in the process is to combine the route and statistic measures together.
+    This is arguably more art than science (for example given the three runs above which two are most
+    similar is debatable). I therefore combined them in some different ways to see the effect. Note this
+    is also fairly specific to my runs and may vary between different people.
+  </p>
+  <p>
+    The final result I came up with was to first ensure the run statistics similarity was less than
+    a certain amount. This would prevent 2 mile runs being similar to 10 mile runs even if they
+    were on the same route. I then took the minimum value of the route measure and the statistic measure
+    after normalizing. Because the route measure could be huge (e.g. comparing runs in the UK and USA)
+    the measures could not just be added or multiplied.
+  </p>
+  <pre><code>
+    def get_top_3(activity, other_activities):
+        ''' finds the top 3 most similar activities to activity '''
+        quite_close = []
+        for test_activity in other_activities:
+            route_1 = route_similarity(activity['path'], test_activity['path'])
+            route_2 = route_similarity(test_activity['path'], activity['path'])
+            route_sim = route_1 + route_2  # combine by adding
+            run_sim = run_similarity(activity, test_activity)
 
+            if run_sim < 2:  # eliminate any which aren't fairly close
+                # 0.7 multiplier works quite well for me
+                quite_close.append({'name': test_activity['name'], 'val': min(route_sim, run_sim*0.7)})
+
+        similar = sorted(quite_close, key=lambda x: x['val'])  # sort by the value
+        print activity['name'], similar[0]['name'], similar[1]['name'], similar[2]['name']
+  </code></pre>
+
+  <p>
+    This is not hugely scientific but I found it gave good results for my runs. With
+    runs from more athletes this could be improved.
+  </p>
+
+  <h3>Results</h3>
+  <p>
+    Below are some selected examples this technique produces:
+  </p>
+
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-1-deets' class='run-deets'></span>
+      <div id='run-1' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Here we get 3 fairly similar activities in terms of statistics but two are
+    similar routes and 1 is completely different (but is almost idential in terms
+    of pace and distance).
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-1-1-deets' class='run-deets'></span>
+      <div id="run-1-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-1-2-deets' class='run-deets'></span>
+      <div id="run-1-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-1-3-deets' class='run-deets'></span>
+      <div id="run-1-3" class='eg-map'></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+  <br>
+
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-2-deets' class='run-deets'></span>
+      <div id='run-2' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Here we match races - which have very distinct statistics to other runs.
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-2-1-deets' class='run-deets'></span>
+      <div id="run-2-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-2-2-deets' class='run-deets'></span>
+      <div id="run-2-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-2-3-deets' class='run-deets'></span>
+      <div id="run-2-3" class='eg-map'></div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+  <br>
+
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-3-deets' class='run-deets'></span>
+      <div id='run-3' class='main-map'></div>
+    </div>
+  </div>
+  <br>
+  <p>
+    Finally here we match very similar workouts - the first two match by
+    route and statistics whereas the latter two match by the statistics.
+  </p>
+  <div class='row' style='text-align: center'>
+    <div class='columns four'>
+      <span id='run-3-1-deets' class='run-deets'></span>
+      <div id="run-3-1" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-3-2-deets' class='run-deets'></span>
+      <div id="run-3-2" class='eg-map'></div>
+    </div>
+    <div class='columns four'>
+      <span id='run-3-3-deets' class='run-deets'></span>
+      <div id="run-3-3" class='eg-map'></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div style='border-bottom: 1px solid black;'>
+  </div>
+
+  <h3>Further Work</h3>
+  <p>
+    There is a lot more I would like to do with this - initally I would like to
+    create a web app to allow others to sign in using the Strava API and find
+    their own similar routes.
+  </p>
+  <p>
+    In addition I think there could be a fair amount more analysis of the similarity
+    measures and combining them. Something that could be interesting is looking at the
+    various paces run throughout the run rather than just the average as this would
+    be a good way to find very similar activities.
+  </p>
+
+  <h3>Code</h3>
+
+  <p>
+    All code for this project is located on <a href='https://github.com/matt-leach/strava-similarity' target='blank'>github</a>.
+  </p>
 
 
     </div>
