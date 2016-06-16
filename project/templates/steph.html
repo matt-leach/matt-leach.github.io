@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+{% extends "base.html" %}
+  {% block head %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
     <style>
       body {
@@ -490,13 +488,16 @@
               .attr('class', function(d, ix){ return 'percent-'+d.Season});
         }
       </script>
+      {% endblock %}
   </head>
   <body>
+    {% block content %}
     <script type="text/javascript">
     // load our data file asynchronously and pass the data
     // to the draw function once it is loaded.
     d3.csv("/static/threes.csv", draw);
     //d3.csv('threes.csv', attempts);
     </script>
+    {% endblock %}
   </body>
 </html>
