@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Matt Leach</title>
+  <link rel='stylesheet' href="/static/skeleton.css" tyle='text/css' />
+  <link rel="stylesheet" type="text/css" href="/static/base.css">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
     <style>
       body {
@@ -490,13 +495,38 @@
               .attr('class', function(d, ix){ return 'percent-'+d.Season});
         }
       </script>
-  </head>
-  <body>
+      
+</head>
+
+<body>
+    <div class='menu'>
+      <p><a href='/' class='menu-link'>home</a></p>
+      <p><a href='/about' class='menu-link'>about</a></p>
+      <p><a href='https://github.com/matt-leach' class='menu-link' target='blank'>projects</a></p>
+      <p><a href='/resume/' class='menu-link'>resume</a></p>
+    </div>
+
+
+    <div class='main'>
+      
     <script type="text/javascript">
     // load our data file asynchronously and pass the data
     // to the draw function once it is loaded.
     d3.csv("/static/threes.csv", draw);
     //d3.csv('threes.csv', attempts);
     </script>
-  </body>
+    
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78638600-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
 </html>
