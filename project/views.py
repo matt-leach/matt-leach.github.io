@@ -6,9 +6,10 @@ from app import app
 def home():
     return render_template('index.html')
 
-@app.route('/about.html')
+
+@app.route('/index2.html')
 def about():
-    return render_template('about.html')
+    return render_template('index2.html')
 
 
 @app.route('/blog/fastest-men-in-the-world.html')
